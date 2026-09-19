@@ -7,8 +7,6 @@ frontend/.env
 frontend/.env.local
 
 # ==== Backend (Python / FastAPI) ====
-backend/__pycache__/
-backend/*.pyc
 backend/.venv/
 backend/venv/
 backend/env/
@@ -17,6 +15,15 @@ backend/.mypy_cache/
 backend/*.egg-info/
 backend/.env
 backend/.env.local
+
+# ==== Python cache (todas as pastas) ====
+__pycache__/
+*.py[cod]
+
+# ==== Variáveis de ambiente (todas as pastas) ====
+.env
+.env.*
+!.env.example
 
 # ==== Editor / OS ====
 .vscode/
