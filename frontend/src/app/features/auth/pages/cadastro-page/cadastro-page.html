@@ -1,0 +1,149 @@
+<main class="pagina">
+  <section class="card card--cadastro" aria-labelledby="cadastro-titulo">
+    <header class="topo">
+      <div class="logo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+          <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
+          <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
+          <path d="M12 5v13" />
+        </svg>
+      </div>
+      <h1 id="cadastro-titulo" class="titulo">Mnemos</h1>
+      <p class="subtitulo">Crie sua conta e comece a estudar</p>
+    </header>
+
+    <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+      <div class="campo">
+        <label class="rotulo" [for]="ids.nome">Nome <span class="obrigatorio" aria-hidden="true">*</span></label>
+        <input
+          [id]="ids.nome"
+          class="input"
+          type="text"
+          formControlName="nome"
+          autocomplete="name"
+          required
+          [attr.aria-invalid]="erro('nome') ? 'true' : null"
+          [attr.aria-describedby]="erro('nome') ? ids.nome + '-erro' : null"
+          (input)="esconderErro('nome')"
+        />
+        @if (erro('nome'); as mensagem) {
+          <p [id]="ids.nome + '-erro'" class="erro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" /><path d="M12 7.5v5M12 16.2v.1" />
+            </svg>
+            {{ mensagem }}
+          </p>
+        }
+      </div>
+
+      <div class="campo">
+        <label class="rotulo" [for]="ids.email">E-mail <span class="obrigatorio" aria-hidden="true">*</span></label>
+        <input
+          [id]="ids.email"
+          class="input"
+          type="email"
+          formControlName="email"
+          autocomplete="email"
+          required
+          [attr.aria-invalid]="erro('email') ? 'true' : null"
+          [attr.aria-describedby]="erro('email') ? ids.email + '-erro' : null"
+          (input)="esconderErro('email')"
+        />
+        @if (erro('email'); as mensagem) {
+          <p [id]="ids.email + '-erro'" class="erro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" /><path d="M12 7.5v5M12 16.2v.1" />
+            </svg>
+            {{ mensagem }}
+          </p>
+        }
+      </div>
+
+      <div class="campo">
+        <label class="rotulo" [for]="ids.senha">Senha <span class="obrigatorio" aria-hidden="true">*</span></label>
+        <div class="senha">
+          <input
+            [id]="ids.senha"
+            class="input"
+            [type]="senhaVisivel().senha ? 'text' : 'password'"
+            formControlName="senha"
+            autocomplete="new-password"
+            required
+            [attr.aria-invalid]="erro('senha') ? 'true' : null"
+            [attr.aria-describedby]="ids.senha + (erro('senha') ? '-erro' : '-ajuda')"
+            (input)="esconderErro('senha')"
+          />
+          <button
+            class="olho"
+            type="button"
+            aria-label="Mostrar senha"
+            [attr.aria-pressed]="senhaVisivel().senha"
+            (click)="alternarSenha('senha')"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" />
+              @if (senhaVisivel().senha) {
+                <path d="M3 3l18 18" />
+              }
+            </svg>
+          </button>
+        </div>
+        @if (erro('senha'); as mensagem) {
+          <p [id]="ids.senha + '-erro'" class="erro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" /><path d="M12 7.5v5M12 16.2v.1" />
+            </svg>
+            {{ mensagem }}
+          </p>
+        } @else {
+          <p [id]="ids.senha + '-ajuda'" class="ajuda">Use pelo menos 8 caracteres.</p>
+        }
+      </div>
+
+      <div class="campo">
+        <label class="rotulo" [for]="ids.confirmarSenha">Confirmar senha <span class="obrigatorio" aria-hidden="true">*</span></label>
+        <div class="senha">
+          <input
+            [id]="ids.confirmarSenha"
+            class="input"
+            [type]="senhaVisivel().confirmarSenha ? 'text' : 'password'"
+            formControlName="confirmarSenha"
+            autocomplete="new-password"
+            required
+            [attr.aria-invalid]="erro('confirmarSenha') ? 'true' : null"
+            [attr.aria-describedby]="erro('confirmarSenha') ? ids.confirmarSenha + '-erro' : null"
+            (input)="esconderErro('confirmarSenha')"
+          />
+          <button
+            class="olho"
+            type="button"
+            aria-label="Mostrar senha"
+            [attr.aria-pressed]="senhaVisivel().confirmarSenha"
+            (click)="alternarSenha('confirmarSenha')"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" /><circle cx="12" cy="12" r="3" />
+              @if (senhaVisivel().confirmarSenha) {
+                <path d="M3 3l18 18" />
+              }
+            </svg>
+          </button>
+        </div>
+        @if (erro('confirmarSenha'); as mensagem) {
+          <p [id]="ids.confirmarSenha + '-erro'" class="erro">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" /><path d="M12 7.5v5M12 16.2v.1" />
+            </svg>
+            {{ mensagem }}
+          </p>
+        }
+      </div>
+
+      <button class="botao" type="submit" [disabled]="carregando()">
+        {{ carregando() ? 'Criando conta...' : 'Criar conta' }}
+      </button>
+    </form>
+
+    <p class="rodape">Já tem conta? <a routerLink="/login">Entrar</a></p>
+  </section>
+</main>

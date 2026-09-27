@@ -1,0 +1,268 @@
+// Estilos compartilhados pelas telas de Login e Cadastro.
+// As cores vêm das variáveis definidas em src/styles.scss.
+
+.pagina {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.card {
+  width: 100%;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(38, 33, 92, 0.06);
+  // Mesma largura e padding nas duas telas, para o card não mudar de tamanho ao navegar.
+  max-width: 420px;
+  padding: 24px 38px;
+}
+
+// Login tem só 2 campos: mais respiro vertical e entre o cabeçalho e o formulário.
+.card--login {
+  --logo: 62px;
+  --titulo: 37px;
+  padding-block: 48px;
+
+  .topo {
+    margin-bottom: 28px;
+  }
+}
+
+// Cadastro tem 4 campos: card mais compacto e com tamanhos fixos (sem clamp),
+// para caber sem rolagem em telas de 768px de altura.
+.card--cadastro {
+  --logo: 42px;
+  --titulo: 28px;
+
+  .topo {
+    margin-bottom: 16px;
+  }
+
+  .subtitulo {
+    margin-top: 6px;
+    font-size: 13px;
+  }
+
+  .campo {
+    margin-bottom: 12px;
+  }
+
+  .rotulo {
+    margin-bottom: 5px;
+  }
+}
+
+.topo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.logo {
+  width: var(--logo);
+  height: var(--logo);
+  margin: 0 auto 10px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+
+  svg {
+    width: 60%;
+    height: 60%;
+  }
+}
+
+.titulo {
+  margin: 0;
+  font-size: var(--titulo);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--cor-texto);
+}
+
+.subtitulo {
+  margin: 8px 0 0;
+  font-size: 15px;
+  color: var(--cor-texto-secundario);
+}
+
+.campo {
+  margin-bottom: 16px;
+}
+
+.rotulo {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--cor-texto);
+}
+
+.obrigatorio {
+  color: var(--cor-erro);
+}
+
+.input {
+  display: block;
+  width: 100%;
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: 10px;
+  background: var(--cor-card);
+  font: inherit;
+  font-size: 16px;
+  color: var(--cor-texto);
+
+  &:focus-visible {
+    border-color: var(--cor-primaria);
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 0;
+  }
+}
+
+// Campo de senha com o botão de mostrar/ocultar à direita.
+.senha {
+  position: relative;
+
+  .input {
+    padding-right: 48px;
+  }
+
+  // Esconde o botão de revelar nativo do Edge, para não aparecerem dois olhos.
+  .input::-ms-reveal {
+    display: none;
+  }
+}
+
+// Área de toque de 44px, na altura total do campo.
+.olho {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+
+  &:hover {
+    color: var(--cor-texto);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-texto);
+    outline-offset: 0;
+  }
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Texto de ajuda abaixo do campo; dá lugar à mensagem de erro quando ela aparece.
+.ajuda {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--cor-texto-secundario);
+}
+
+.erro {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--cor-erro);
+
+  svg {
+    flex: none;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.botao {
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--cor-primaria);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-primaria-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-texto);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background: var(--cor-primaria-carregando);
+    cursor: progress;
+  }
+}
+
+.rodape {
+  margin: 16px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--cor-texto-secundario);
+
+  a {
+    color: var(--cor-primaria);
+    font-weight: 500;
+    text-decoration: underline;
+
+    &:hover {
+      color: var(--cor-texto);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--cor-texto);
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+}
+
+// Celular: mantém o card do protótipo, só mais compacto.
+@media (max-width: 479.98px) {
+  // Margem vertical menor para o Cadastro caber em telas baixas sem rolagem.
+  .pagina {
+    padding: 12px 24px;
+  }
+
+  .card {
+    padding-inline: 24px;
+  }
+
+  .card--login {
+    --logo: 52px;
+    --titulo: 32px;
+  }
+
+  .card--cadastro {
+    --logo: 40px;
+    padding-block: 16px;
+  }
+}

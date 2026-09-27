@@ -1,1 +1,25 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --cor-primaria: #534ab7;
+  --cor-primaria-hover: #443ca0;
+  --cor-primaria-carregando: #6e66c8;
+  --cor-texto: #26215c;
+  --cor-texto-secundario: #6b6790;
+  --cor-fundo: #f5f5f7;
+  --cor-card: #ffffff;
+  --cor-borda-card: #e7e6f2;
+  --cor-borda-campo: #8a87a8;
+  --cor-erro: #c1122e;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--cor-fundo);
+  color: var(--cor-texto);
+  font-family: 'Inter', system-ui, sans-serif;
+}
