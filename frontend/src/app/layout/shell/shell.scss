@@ -1,0 +1,25 @@
+// Estrutura das telas logadas: sidebar fixa à esquerda e o conteúdo da rota ao lado.
+
+:host {
+  display: grid;
+  grid-template-columns: 264px 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.conteudo {
+  min-width: 0;
+  padding: 37px 38px 38px 40px;
+}
+
+@media (max-width: 1023.98px) {
+  :host {
+    grid-template-columns: 1fr;
+    align-content: start;
+  }
+
+  // Embaixo, reserva os 73px da barra de navegação fixa (+ área segura do iPhone) e 22px de respiro.
+  .conteudo {
+    padding: 22px 18px calc(73px + 22px + env(safe-area-inset-bottom));
+  }
+}

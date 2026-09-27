@@ -1,0 +1,78 @@
+// As cores vêm das variáveis definidas em src/styles.scss.
+// Só aparece abaixo de 1024px (celular e tablet); acima disso a navegação fica na sidebar.
+
+:host {
+  display: none;
+}
+
+@media (max-width: 1023.98px) {
+  :host {
+    display: block;
+  }
+}
+
+// Altura total de 73px (8 + 56 + 8 + 1 de borda) mais a área segura do iPhone;
+// o shell reserva esse espaço no fim do conteúdo.
+.barra {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  padding: 8px 8px calc(8px + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--cor-borda-card);
+  background: var(--cor-sidebar);
+}
+
+.itens {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 6px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--cor-texto);
+  text-decoration: none;
+
+  svg {
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: var(--cor-primaria-suave);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 0;
+  }
+}
+
+.item--ativo,
+.item--ativo:hover {
+  background: var(--cor-primaria-selecionada);
+  font-weight: 600;
+}
+
+// Texto que não cabe termina em "..." (ex.: "Desempe...").
+.rotulo {
+  max-width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

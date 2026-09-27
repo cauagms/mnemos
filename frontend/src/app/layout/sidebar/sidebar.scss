@@ -1,0 +1,90 @@
+// As cores vêm das variáveis definidas em src/styles.scss.
+
+:host {
+  display: block;
+}
+
+.sidebar {
+  height: 100%;
+  padding: 22px 16px;
+  background: var(--cor-sidebar);
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 24px 6px;
+}
+
+.logo {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--cor-primaria);
+
+  svg {
+    width: 60%;
+    height: 60%;
+  }
+}
+
+.nome {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--cor-texto);
+}
+
+.itens {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  height: 42px;
+  padding: 0 15px;
+  border-left: 3px solid transparent;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--cor-texto);
+  text-decoration: none;
+
+  svg {
+    flex: none;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    background: var(--cor-primaria-suave);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 0;
+  }
+}
+
+.item--ativo,
+.item--ativo:hover {
+  border-left-color: var(--cor-primaria);
+  background: var(--cor-primaria-selecionada);
+  font-weight: 600;
+}
+
+// Celular e tablet: a navegação passa para a barra inferior (layout/bottom-nav).
+@media (max-width: 1023.98px) {
+  :host {
+    display: none;
+  }
+}

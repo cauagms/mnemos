@@ -1,0 +1,183 @@
+// As cores vêm das variáveis definidas em src/styles.scss.
+
+:host {
+  display: block;
+}
+
+.cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.icone {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--cor-primaria-suave);
+  color: var(--cor-primaria);
+
+  svg {
+    width: 19px;
+    height: 19px;
+  }
+}
+
+.titulo {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--cor-texto);
+}
+
+.subtitulo {
+  margin: 11px 0 26px;
+  font-size: 13px;
+  color: var(--cor-texto-secundario);
+}
+
+// Estado vazio
+.vazio {
+  padding: 64px 19px;
+  border: 2px dashed var(--cor-borda-tracejada);
+  border-radius: 13px;
+  text-align: center;
+}
+
+.vazio-icone {
+  width: 62px;
+  height: 62px;
+  margin: 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--cor-primaria-suave);
+  color: var(--cor-primaria);
+
+  svg {
+    width: 27px;
+    height: 27px;
+  }
+}
+
+.vazio-titulo {
+  margin: 16px 0 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.vazio-texto {
+  max-width: 408px;
+  margin: 13px auto 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--cor-texto-secundario);
+}
+
+.botao {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 42px;
+  margin-top: 22px;
+  padding: 0 19px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--cor-primaria);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    background: var(--cor-primaria-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-texto);
+    outline-offset: 2px;
+  }
+}
+
+// Grade de cards
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 280px));
+  gap: 22px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nova {
+  width: 100%;
+  height: 100%;
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  border: 2px dashed var(--cor-primaria-clara);
+  border-radius: 13px;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-primaria);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--cor-primaria);
+    background: var(--cor-card);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 2px;
+  }
+}
+
+.nova-icone {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--cor-primaria-suave);
+
+  svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+// Tablet: 2 colunas; o card "Nova disciplina" segue no fluxo do grid.
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .grade {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+// Celular: cards em coluna única, ocupando a largura toda.
+@media (max-width: 767.98px) {
+  .vazio {
+    padding: 48px 20px;
+  }
+
+  .grade {
+    grid-template-columns: 1fr;
+  }
+}

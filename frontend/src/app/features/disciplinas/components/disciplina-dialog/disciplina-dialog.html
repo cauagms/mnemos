@@ -1,0 +1,46 @@
+<dialog
+  #dialogo
+  class="dialogo"
+  aria-labelledby="disciplina-dialogo-titulo"
+  (cancel)="$event.preventDefault(); cancelarEdicao()"
+>
+  <h2 id="disciplina-dialogo-titulo" class="titulo">
+    {{ disciplina() ? 'Editar disciplina' : 'Nova disciplina' }}
+  </h2>
+
+  <form [formGroup]="form" (ngSubmit)="enviar()" novalidate>
+    <label class="rotulo" for="disciplina-nome">Nome da disciplina</label>
+    <input
+      #campo
+      id="disciplina-nome"
+      class="input"
+      type="text"
+      formControlName="nome"
+      placeholder="Ex.: Matemática"
+      autocomplete="off"
+      required
+      [attr.aria-invalid]="erroVisivel() ? 'true' : null"
+      [attr.aria-describedby]="erroVisivel() ? 'disciplina-nome-erro' : null"
+      (input)="erroVisivel.set(false)"
+    />
+    @if (erroVisivel()) {
+      <p id="disciplina-nome-erro" class="erro">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" /><path d="M12 7.5v5M12 16.2v.1" />
+        </svg>
+        Informe o nome da disciplina.
+      </p>
+    }
+
+    <div class="botoes">
+      <button class="botao botao--secundario" type="button" (click)="cancelarEdicao()">Cancelar</button>
+      <button class="botao" type="submit" [disabled]="salvando()">
+        @if (disciplina()) {
+          {{ salvando() ? 'Salvando...' : 'Salvar' }}
+        } @else {
+          {{ salvando() ? 'Criando...' : 'Criar' }}
+        }
+      </button>
+    </div>
+  </form>
+</dialog>

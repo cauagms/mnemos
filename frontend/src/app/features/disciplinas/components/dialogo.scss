@@ -1,0 +1,142 @@
+// Estilos compartilhados pelos modais de Disciplinas (criar/editar e excluir).
+// As cores vêm das variáveis definidas em src/styles.scss.
+
+.dialogo {
+  width: min(420px, calc(100% - 32px));
+  padding: 26px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--cor-card);
+  color: var(--cor-texto);
+  box-shadow: 0 24px 48px rgba(38, 33, 92, 0.18);
+
+  &::backdrop {
+    background: var(--cor-sobreposicao);
+  }
+}
+
+.titulo {
+  margin: 0 0 21px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.descricao {
+  margin: -10px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--cor-texto-secundario);
+}
+
+.rotulo {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.input {
+  display: block;
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: 10px;
+  background: var(--cor-card);
+  font: inherit;
+  font-size: 13px;
+  color: var(--cor-texto);
+
+  &::placeholder {
+    color: var(--cor-texto-secundario);
+  }
+
+  // Borda de 2px no foco sem deslocar o conteúdo.
+  &:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: inset 0 0 0 1px var(--cor-primaria);
+    outline: none;
+  }
+}
+
+.erro {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--cor-erro);
+
+  svg {
+    flex: none;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+.botoes {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.botao {
+  height: 42px;
+  padding: 0 19px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--cor-primaria);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-primaria-hover);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-texto);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    background: var(--cor-primaria-carregando);
+    cursor: progress;
+  }
+}
+
+.botao--secundario {
+  background: var(--cor-primaria-suave);
+  color: var(--cor-texto);
+
+  &:hover {
+    background: var(--cor-primaria-selecionada);
+  }
+}
+
+.botao--perigo {
+  background: var(--cor-erro);
+
+  &:hover {
+    background: #a10f26;
+  }
+
+  &:disabled {
+    background: #d65a6e;
+  }
+}
+
+@media (max-width: 479.98px) {
+  .dialogo {
+    padding: 24px;
+  }
+
+  // Abaixo de 16px o iOS dá zoom ao focar o campo.
+  .input {
+    font-size: 16px;
+  }
+}

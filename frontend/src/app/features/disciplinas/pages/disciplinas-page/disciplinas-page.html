@@ -1,0 +1,69 @@
+<header class="cabecalho">
+  <div class="icone">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+    </svg>
+  </div>
+  <h1 class="titulo">Minhas Disciplinas</h1>
+</header>
+<p class="subtitulo">Organize seus estudos e acompanhe o que precisa revisar hoje.</p>
+
+@if (disciplinas(); as lista) {
+  @if (lista.length === 0) {
+    <section class="vazio" aria-labelledby="disciplinas-vazio-titulo">
+      <div class="vazio-icone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 7v14" /><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z" />
+        </svg>
+      </div>
+      <h2 id="disciplinas-vazio-titulo" class="vazio-titulo">Nenhuma disciplina ainda</h2>
+      <p class="vazio-texto">Você ainda não tem disciplinas. Crie a primeira para começar a estudar!</p>
+      <button class="botao" type="button" (click)="dialogo.set({ tipo: 'criar' })">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        Criar disciplina
+      </button>
+    </section>
+  } @else {
+    <ul class="grade">
+      @for (disciplina of lista; track disciplina.id) {
+        <li>
+          <app-disciplina-card
+            [disciplina]="disciplina"
+            (editar)="dialogo.set({ tipo: 'editar', disciplina })"
+            (excluir)="dialogo.set({ tipo: 'excluir', disciplina })"
+          />
+        </li>
+      }
+      <li>
+        <button class="nova" type="button" (click)="dialogo.set({ tipo: 'criar' })">
+          <span class="nova-icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M12 5v14M5 12h14" />
+            </svg>
+          </span>
+          Nova disciplina
+        </button>
+      </li>
+    </ul>
+  }
+}
+
+@if (dialogo(); as aberto) {
+  @if (aberto.tipo === 'excluir') {
+    <app-excluir-disciplina-dialog
+      [disciplina]="aberto.disciplina"
+      [excluindo]="salvando()"
+      (confirmar)="excluir()"
+      (cancelar)="dialogo.set(null)"
+    />
+  } @else {
+    <app-disciplina-dialog
+      [disciplina]="aberto.tipo === 'editar' ? aberto.disciplina : null"
+      [salvando]="salvando()"
+      (salvar)="salvar($event)"
+      (cancelar)="dialogo.set(null)"
+    />
+  }
+}

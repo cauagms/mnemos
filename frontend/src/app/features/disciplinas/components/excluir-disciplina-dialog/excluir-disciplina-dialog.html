@@ -1,0 +1,21 @@
+<dialog
+  #dialogo
+  class="dialogo"
+  aria-labelledby="excluir-disciplina-titulo"
+  aria-describedby="excluir-disciplina-descricao"
+  (cancel)="$event.preventDefault(); cancelar.emit()"
+>
+  <h2 id="excluir-disciplina-titulo" class="titulo">Excluir disciplina?</h2>
+  <p id="excluir-disciplina-descricao" class="descricao">
+    “{{ disciplina().nome }}” será excluída. Essa ação não pode ser desfeita.
+  </p>
+
+  <div class="botoes">
+    <button #botaoCancelar class="botao botao--secundario" type="button" (click)="cancelar.emit()">
+      Cancelar
+    </button>
+    <button class="botao botao--perigo" type="button" [disabled]="excluindo()" (click)="confirmar.emit()">
+      {{ excluindo() ? 'Excluindo...' : 'Excluir' }}
+    </button>
+  </div>
+</dialog>
