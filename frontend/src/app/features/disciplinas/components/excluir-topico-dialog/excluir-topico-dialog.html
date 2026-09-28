@@ -1,0 +1,22 @@
+<dialog
+  #dialogo
+  class="dialogo"
+  aria-labelledby="excluir-topico-titulo"
+  aria-describedby="excluir-topico-descricao"
+  (cancel)="$event.preventDefault(); cancelar.emit()"
+>
+  <h2 id="excluir-topico-titulo" class="titulo">Excluir tópico?</h2>
+  <p id="excluir-topico-descricao" class="descricao">
+    Isso vai excluir {{ topico().formato === 'quiz' ? 'todas as questões' : 'todos os cards' }} deste
+    tópico. Essa ação não pode ser desfeita.
+  </p>
+
+  <div class="botoes">
+    <button #botaoCancelar class="botao botao--secundario" type="button" (click)="cancelar.emit()">
+      Cancelar
+    </button>
+    <button class="botao botao--perigo" type="button" [disabled]="excluindo()" (click)="confirmar.emit()">
+      {{ excluindo() ? 'Excluindo...' : 'Excluir' }}
+    </button>
+  </div>
+</dialog>

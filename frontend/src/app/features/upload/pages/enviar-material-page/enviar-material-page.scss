@@ -1,0 +1,288 @@
+// Estilos próprios da tela de Enviar material; título, botão e "Voltar" vêm das telas de
+// Disciplinas e Tópicos. As cores vêm das variáveis definidas em src/styles.scss.
+
+.voltar {
+  margin-bottom: 0;
+}
+
+.trilha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--cor-texto-secundario);
+}
+
+.trilha-atual {
+  font-weight: 600;
+  color: var(--cor-primaria);
+  overflow-wrap: anywhere;
+}
+
+.titulo {
+  margin-top: 10px;
+}
+
+.painel {
+  max-width: 620px;
+  margin-top: 28px;
+  padding: 28px;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 16px;
+}
+
+// O <input type="file"> fica escondido; quem abre o seletor é o botão "Selecionar arquivo".
+.seletor {
+  display: none;
+}
+
+.area {
+  min-height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  border: 2px dashed var(--cor-borda-tracejada);
+  border-radius: 13px;
+  transition:
+    background 120ms,
+    border-color 120ms;
+}
+
+.area--arrastando {
+  border-color: var(--cor-primaria);
+  background: var(--cor-primaria-suave);
+}
+
+.pedido,
+.processando,
+.enviado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.pedido-icone {
+  width: 68px;
+  height: 68px;
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: var(--cor-primaria-suave);
+  color: var(--cor-primaria);
+
+  svg {
+    width: 34px;
+    height: 34px;
+  }
+}
+
+.girando {
+  animation: girar 900ms linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .girando {
+    animation-duration: 3s;
+  }
+}
+
+.pedido-titulo {
+  margin: 0;
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.pedido-ou {
+  margin: 0;
+  font-size: 13px;
+  color: var(--cor-texto-secundario);
+}
+
+.selecionar {
+  height: 40px;
+  padding: 0 18px;
+  border: 1px solid var(--cor-primaria);
+  border-radius: 10px;
+  background: var(--cor-primaria-suave);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-texto);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--cor-primaria-selecionada);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 2px;
+  }
+}
+
+.formatos {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: var(--cor-texto-secundario);
+}
+
+// Envio concluído
+.enviado {
+  gap: 14px;
+}
+
+.enviado-texto {
+  max-width: 420px;
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--cor-texto-secundario);
+}
+
+.enviado-botoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 4px;
+
+  .botao {
+    height: 44px;
+    margin-top: 0;
+    text-decoration: none;
+  }
+
+  .selecionar {
+    height: 44px;
+  }
+}
+
+// Arquivo escolhido
+.escolhido {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.arquivo {
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 12px;
+  background: var(--cor-card);
+}
+
+.arquivo-icone {
+  flex: none;
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  background: var(--cor-primaria-suave);
+  color: var(--cor-primaria);
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.arquivo-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.arquivo-nome {
+  overflow: hidden;
+  font-size: 13px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--cor-texto);
+}
+
+.arquivo-tamanho {
+  font-size: 12px;
+  color: var(--cor-texto-secundario);
+}
+
+.remover {
+  flex: none;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--cor-texto-secundario);
+  cursor: pointer;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    background: var(--cor-primaria-suave);
+    color: var(--cor-texto);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 1px;
+  }
+}
+
+// O .botao compartilhado tem margem de cima pensada para o estado vazio.
+.escolhido .botao {
+  margin-top: 0;
+}
+
+.erro {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin: 14px 0 0;
+  font-size: 12.5px;
+  color: var(--cor-erro);
+
+  svg {
+    flex: none;
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .painel {
+    padding: 16px;
+  }
+
+  .area {
+    padding: 24px 16px;
+  }
+}

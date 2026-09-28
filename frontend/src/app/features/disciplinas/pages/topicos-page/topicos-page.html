@@ -1,0 +1,72 @@
+<a class="voltar" routerLink="/disciplinas">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M14 6l-6 6 6 6" />
+  </svg>
+  Voltar para Minhas Disciplinas
+</a>
+
+@if (disciplina(); as disciplina) {
+  <h1 class="titulo">{{ disciplina.nome }}</h1>
+  <p class="subtitulo">Gerencie os tópicos e envie materiais de estudo desta disciplina.</p>
+
+  @if (topicos(); as lista) {
+    @if (lista.length === 0) {
+      <section class="vazio" aria-labelledby="topicos-vazio-titulo">
+        <div class="vazio-icone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12.6 3H20a1 1 0 0 1 1 1v7.4a1 1 0 0 1-.3.7l-8.6 8.6a1 1 0 0 1-1.4 0l-7.4-7.4a1 1 0 0 1 0-1.4l8.6-8.6a1 1 0 0 1 .7-.3Z" /><path d="M16.5 7.5v.01" />
+          </svg>
+        </div>
+        <h2 id="topicos-vazio-titulo" class="vazio-titulo">Nenhum tópico ainda</h2>
+        <p class="vazio-texto">Crie o primeiro tópico desta disciplina para enviar materiais e gerar seus cards.</p>
+        <button class="botao" type="button" (click)="dialogo.set({ tipo: 'criar' })">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 5v14M5 12h14" />
+          </svg>
+          Criar tópico
+        </button>
+      </section>
+    } @else {
+      <ul class="grade">
+        @for (topico of lista; track topico.id) {
+          <li>
+            <app-topico-card
+              [disciplinaId]="disciplina.id"
+              [topico]="topico"
+              (editar)="dialogo.set({ tipo: 'editar', topico })"
+              (excluir)="dialogo.set({ tipo: 'excluir', topico })"
+            />
+          </li>
+        }
+        <li>
+          <button class="nova" type="button" (click)="dialogo.set({ tipo: 'criar' })">
+            <span class="nova-icone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                <path d="M12 5v14M5 12h14" />
+              </svg>
+            </span>
+            Novo tópico
+          </button>
+        </li>
+      </ul>
+    }
+  }
+}
+
+@if (dialogo(); as aberto) {
+  @if (aberto.tipo === 'excluir') {
+    <app-excluir-topico-dialog
+      [topico]="aberto.topico"
+      [excluindo]="salvando()"
+      (confirmar)="excluir()"
+      (cancelar)="dialogo.set(null)"
+    />
+  } @else {
+    <app-topico-dialog
+      [topico]="aberto.tipo === 'editar' ? aberto.topico : null"
+      [salvando]="salvando()"
+      (salvar)="salvar($event)"
+      (cancelar)="dialogo.set(null)"
+    />
+  }
+}

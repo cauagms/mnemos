@@ -1,0 +1,114 @@
+<a class="voltar" [routerLink]="['/disciplinas', disciplinaId]">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M14 6l-6 6 6 6" />
+  </svg>
+  Voltar
+</a>
+
+@if (trilha(); as trilha) {
+  <nav class="trilha" aria-label="Você está em">
+    <span>{{ trilha.disciplina }}</span>
+    <span aria-hidden="true">›</span>
+    <span class="trilha-atual" aria-current="page">{{ trilha.topico.nome }}</span>
+  </nav>
+}
+
+<h1 class="titulo">Enviar material</h1>
+
+<section class="painel">
+  <input
+    #seletor
+    class="seletor"
+    type="file"
+    accept=".pdf,.docx,.pptx"
+    tabindex="-1"
+    aria-hidden="true"
+    (change)="escolher($event)"
+  />
+
+  <div
+    class="area"
+    [class.area--arrastando]="arrastando()"
+    (dragover)="arrastarSobre($event)"
+    (dragleave)="arrastando.set(false)"
+    (drop)="soltar($event)"
+  >
+    @if (enviando()) {
+      <div class="processando" role="status">
+        <div class="pedido-icone">
+          <svg class="girando" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <path d="M12 3.5a8.5 8.5 0 1 0 8.5 8.5" opacity="0.9" /><path d="M12 3.5a8.5 8.5 0 0 1 8.5 8.5" opacity="0.18" />
+          </svg>
+        </div>
+        <h2 class="pedido-titulo">Processando seu material...</h2>
+        <p class="pedido-ou">Isso pode levar alguns instantes.</p>
+      </div>
+    } @else if (enviado()) {
+      @let quiz = trilha()?.topico?.formato === 'quiz';
+      <div class="enviado" role="status">
+        <div class="pedido-icone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" /><path d="m8.5 12.2 2.4 2.4 4.6-4.8" />
+          </svg>
+        </div>
+        <h2 class="pedido-titulo">Material enviado com sucesso!</h2>
+        <p class="enviado-texto">
+          @if (quiz) {
+            Suas questões já estão em Revisão. Acesse para responder.
+          } @else {
+            Seus flashcards já estão em Cards Pendentes. Acesse para revisar e aprovar.
+          }
+        </p>
+        <div class="enviado-botoes">
+          <a class="botao" [routerLink]="quiz ? '/revisao' : '/cards-pendentes'">
+            {{ quiz ? 'Ir para Revisão' : 'Ir para Cards Pendentes' }}
+          </a>
+          <button class="selecionar" type="button" (click)="enviado.set(false)">
+            Enviar outro material
+          </button>
+        </div>
+      </div>
+    } @else if (arquivo(); as arquivo) {
+      <div class="escolhido">
+        <div class="arquivo">
+          <div class="arquivo-icone">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 3h8l4 4v14H6z" /><path d="M14 3v4h4" />
+            </svg>
+          </div>
+          <div class="arquivo-info">
+            <span class="arquivo-nome">{{ arquivo.name }}</span>
+            <span class="arquivo-tamanho">{{ tamanho(arquivo.size) }}</span>
+          </div>
+          <button class="remover" type="button" aria-label="Remover arquivo" (click)="remover()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M6 6l12 12M18 6 6 18" />
+            </svg>
+          </button>
+        </div>
+        <button class="botao" type="button" (click)="enviar()">Enviar material</button>
+      </div>
+    } @else {
+      <div class="pedido">
+        <div class="pedido-icone">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M6.5 17.5a4.5 4.5 0 0 1 .6-8.96 5.5 5.5 0 0 1 10.55 1.02A4 4 0 0 1 17.5 17.5" /><path d="M12 20V10.5M8.8 13.6 12 10.4l3.2 3.2" />
+          </svg>
+        </div>
+        <h2 class="pedido-titulo">Arraste e solte seu arquivo aqui</h2>
+        <p class="pedido-ou">ou</p>
+        <button class="selecionar" type="button" (click)="abrirSeletor()">Selecionar arquivo</button>
+        <p class="formatos">Formatos aceitos: PDF, DOCX, PPTX</p>
+      </div>
+    }
+  </div>
+
+  @if (erro(); as erro) {
+    <p class="erro" role="alert">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="9" /><path d="M12 7.5v5M12 16.2v.1" />
+      </svg>
+      {{ erro }}
+    </p>
+  }
+</section>

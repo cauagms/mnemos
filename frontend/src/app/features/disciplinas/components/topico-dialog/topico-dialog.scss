@@ -1,0 +1,82 @@
+// Escolha do formato do tópico; o resto do modal vem de ../dialogo.scss.
+
+.formatos {
+  margin: 20px 0 0;
+  padding: 0;
+  border: 0;
+
+  legend {
+    padding: 0;
+  }
+}
+
+.opcoes {
+  display: flex;
+  gap: 10px;
+}
+
+// Radio nativo escondido visualmente (continua acessível por teclado e leitor de tela);
+// o <label> inteiro vira o "botão".
+.opcao {
+  flex: 1;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 10px;
+  background: var(--cor-card);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-texto);
+  cursor: pointer;
+
+  input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  svg {
+    flex: none;
+    width: 17px;
+    height: 17px;
+  }
+
+  &:hover {
+    border-color: var(--cor-primaria-clara);
+  }
+
+  &:has(input:checked) {
+    border-color: var(--cor-primaria);
+    box-shadow: inset 0 0 0 1px var(--cor-primaria);
+    background: var(--cor-primaria-selecionada);
+  }
+
+  &:has(input:focus-visible) {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 2px;
+  }
+}
+
+.aviso {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: var(--cor-primaria-suave);
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--cor-texto);
+
+  svg {
+    flex: none;
+    width: 15px;
+    height: 15px;
+    margin-top: 2px;
+    color: var(--cor-primaria);
+  }
+}

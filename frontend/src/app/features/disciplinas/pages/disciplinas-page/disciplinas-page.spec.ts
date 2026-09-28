@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
 import { Observable, Subject, of } from 'rxjs';
 import { Disciplina, DisciplinasService } from '../../services/disciplinas.service';
 import { DisciplinasPage } from './disciplinas-page';
@@ -57,7 +58,7 @@ describe('DisciplinasPage', () => {
 
     await TestBed.configureTestingModule({
       imports: [DisciplinasPage],
-      providers: [{ provide: DisciplinasService, useValue: service }],
+      providers: [provideRouter([]), { provide: DisciplinasService, useValue: service }],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DisciplinasPage);
@@ -162,6 +163,14 @@ describe('DisciplinasPage', () => {
       expect(nomes()).toEqual(['Matemática', 'Física']);
       expect(texto('.vazio')).toBeNull();
       expect(botao('Nova disciplina')).not.toBeNull();
+    });
+
+    it('o nome de cada card leva à página de tópicos da disciplina', () => {
+      const links = [...el.querySelectorAll<HTMLAnchorElement>('.cartao a')];
+      expect(links.map((a) => [a.textContent?.trim(), a.getAttribute('href')])).toEqual([
+        ['Matemática', '/disciplinas/1'],
+        ['Física', '/disciplinas/2'],
+      ]);
     });
 
     it('o card de nova disciplina abre o modal', async () => {

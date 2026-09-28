@@ -3,6 +3,7 @@ import {
   ElementRef,
   Injector,
   afterNextRender,
+  computed,
   inject,
   input,
   output,
@@ -10,28 +11,33 @@ import {
   viewChild,
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { Disciplina } from '../../services/disciplinas.service';
+import { Topico } from '../../services/topicos.service';
 
-/**
- * Card de uma disciplina. As ações (Editar/Excluir) aparecem dentro do cabeçalho do
- * próprio card, no espaço livre entre o ícone e o botão ⋮, em vez de um menu suspenso:
- * assim não cobrem o nome nem invadem o card vizinho na grade.
- */
+/** Card de um tópico, com o menu ⋮ de Editar/Excluir igual ao do card de disciplina. */
 @Component({
-  selector: 'app-disciplina-card',
+  selector: 'app-topico-card',
   imports: [RouterLink],
-  templateUrl: './disciplina-card.html',
-  styleUrl: './disciplina-card.scss',
+  templateUrl: './topico-card.html',
+  styleUrl: './topico-card.scss',
   host: {
     '(document:click)': 'fecharSeForaDoCard($event)',
     '(keydown.escape)': 'fecharAcoes()',
   },
 })
-export class DisciplinaCard {
+export class TopicoCard {
   private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
   private readonly injector = inject(Injector);
 
-  readonly disciplina = input.required<Disciplina>();
+  readonly disciplinaId = input.required<string>();
+  readonly topico = input.required<Topico>();
+
+  /** Tela de enviar material deste tópico, aberta pelo card inteiro ou pelo botão. */
+  protected readonly rota = computed(() => [
+    '/disciplinas',
+    this.disciplinaId(),
+    'topicos',
+    this.topico().id,
+  ]);
   readonly editar = output<void>();
   readonly excluir = output<void>();
 
