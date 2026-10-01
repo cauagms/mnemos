@@ -1,0 +1,19 @@
+<dialog
+  #dialogo
+  class="dialogo"
+  aria-labelledby="descartar-card-titulo"
+  aria-describedby="descartar-card-descricao"
+  (cancel)="$event.preventDefault(); cancelar.emit()"
+>
+  <h2 id="descartar-card-titulo" class="titulo">Descartar card?</h2>
+  <p id="descartar-card-descricao" class="descricao">
+    O card não vai para a Revisão. Essa ação não pode ser desfeita.
+  </p>
+
+  <div class="botoes">
+    <button #botaoCancelar class="botao botao--secundario" type="button" (click)="cancelar.emit()">
+      Cancelar
+    </button>
+    <button class="botao botao--perigo" type="button" (click)="confirmar.emit()">Descartar</button>
+  </div>
+</dialog>

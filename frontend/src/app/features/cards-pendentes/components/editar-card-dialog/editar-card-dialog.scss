@@ -1,0 +1,41 @@
+// Campos do modal de edição; caixa, título, rótulo e botões vêm de dialogo.scss.
+
+// Mais margem dos lados que os outros modais: este só aparece no celular.
+.dialogo {
+  width: min(420px, calc(100% - 72px));
+}
+
+.campo-rotulo {
+  display: block;
+
+  & + & {
+    margin-top: 18px;
+  }
+}
+
+// Abaixo de 16px o iOS dá zoom ao focar o campo; o modal só aparece no celular.
+.campo {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: 10px;
+  background: var(--cor-card);
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--cor-texto);
+  resize: vertical;
+
+  // Borda de 2px no foco sem deslocar o conteúdo (igual aos campos dos outros modais).
+  &:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: inset 0 0 0 1px var(--cor-primaria);
+    outline: none;
+  }
+}
+
+.botao:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}

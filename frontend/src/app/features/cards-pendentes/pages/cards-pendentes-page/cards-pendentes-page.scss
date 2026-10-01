@@ -1,0 +1,190 @@
+// Estilos próprios da tela de Cards Pendentes; título, subtítulo, estado vazio e botão vêm de
+// disciplinas-page.scss. As cores vêm das variáveis definidas em src/styles.scss.
+
+a.botao {
+  text-decoration: none;
+}
+
+.lista {
+  max-width: 820px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.card {
+  padding: 22px;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 14px;
+}
+
+.trilha {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--cor-texto-secundario);
+}
+
+.trilha-atual {
+  font-weight: 600;
+  color: var(--cor-primaria);
+  overflow-wrap: anywhere;
+}
+
+.lados {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.lado {
+  min-height: 118px;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 12px;
+  background: #f9f9fc;
+}
+
+.rotulo {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.texto {
+  margin: 6px 0 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+.frente .texto {
+  font-weight: 600;
+}
+
+.campo {
+  flex: 1;
+  min-height: 88px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 1px solid var(--cor-borda-campo);
+  border-radius: 8px;
+  background: var(--cor-card);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--cor-texto);
+  resize: vertical;
+
+  // Borda de 2px no foco sem deslocar o conteúdo (igual aos campos dos modais).
+  &:focus {
+    border-color: var(--cor-primaria);
+    box-shadow: inset 0 0 0 1px var(--cor-primaria);
+    outline: none;
+  }
+}
+
+.acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.acao {
+  --cor-acao: var(--cor-texto);
+  --fundo-acao: var(--cor-card);
+  --borda-acao: var(--cor-borda-card);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--borda-acao);
+  border-radius: 8px;
+  background: var(--fundo-acao);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-acao);
+  cursor: pointer;
+
+  svg {
+    flex: none;
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: var(--cor-acao);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-acao);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.acao--aprovar {
+  --cor-acao: #1d6b42;
+  --fundo-acao: #e8f6ee;
+  --borda-acao: #7dbf98;
+}
+
+.acao--descartar {
+  --cor-acao: var(--cor-erro);
+  --fundo-acao: #fdecef;
+  --borda-acao: #e98b9b;
+}
+
+.acao--salvar {
+  --cor-acao: #fff;
+  --fundo-acao: var(--cor-primaria);
+  --borda-acao: var(--cor-primaria);
+
+  &:hover:not(:disabled) {
+    --fundo-acao: var(--cor-primaria-hover);
+    border-color: var(--cor-primaria-hover);
+  }
+
+  &:focus-visible {
+    outline-color: var(--cor-primaria);
+  }
+}
+
+@media (max-width: 767.98px) {
+  .card {
+    padding: 18px;
+  }
+
+  .lados {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .lado {
+    min-height: 0;
+  }
+
+  // Abaixo de 16px o iOS dá zoom ao focar o campo.
+  .campo {
+    font-size: 16px;
+  }
+}

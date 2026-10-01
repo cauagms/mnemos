@@ -1,0 +1,23 @@
+<dialog
+  #dialogo
+  class="dialogo"
+  aria-labelledby="editar-card-titulo"
+  (cancel)="$event.preventDefault(); cancelar.emit()"
+>
+  <h2 id="editar-card-titulo" class="titulo">Editar card</h2>
+
+  <label class="campo-rotulo">
+    <span class="rotulo">Pergunta</span>
+    <textarea #campoFrente class="campo" name="frente" rows="3" [value]="frente()" (input)="escrever('frente', $event)"></textarea>
+  </label>
+
+  <label class="campo-rotulo">
+    <span class="rotulo">Resposta</span>
+    <textarea class="campo" name="verso" rows="4" [value]="verso()" (input)="escrever('verso', $event)"></textarea>
+  </label>
+
+  <div class="botoes">
+    <button class="botao botao--secundario" type="button" (click)="cancelar.emit()">Cancelar</button>
+    <button class="botao" type="button" [disabled]="!podeSalvar()" (click)="enviar()">Salvar</button>
+  </div>
+</dialog>

@@ -1,0 +1,87 @@
+<h1 class="titulo">Cards Pendentes</h1>
+<p class="subtitulo">Os flashcards que estão esperando sua revisão aparecem aqui.</p>
+
+@if (cards(); as cards) {
+  @if (cards.length === 0) {
+    <section class="vazio" aria-labelledby="pendentes-vazio-titulo">
+      <div class="vazio-icone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="8" y="2" width="8" height="4" rx="1" /><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2" /><path d="m9 14 2 2 4-4" />
+        </svg>
+      </div>
+      <h2 id="pendentes-vazio-titulo" class="vazio-titulo">Nenhum card pendente</h2>
+      <p class="vazio-texto">Envie um material em um tópico de flashcards para gerar novos cards para revisar.</p>
+      <a class="botao" routerLink="/disciplinas">Ir para Disciplinas</a>
+    </section>
+  } @else {
+    <ul class="lista">
+      @for (card of cards; track card.id) {
+        <li class="card" [attr.data-card]="card.id">
+          <nav class="trilha" aria-label="Card de">
+            <span>{{ card.disciplina }}</span>
+            <span aria-hidden="true">›</span>
+            <span class="trilha-atual">{{ card.topico }}</span>
+          </nav>
+
+          @if (editando() === card.id) {
+            <div class="lados">
+              <label class="lado frente">
+                <span class="rotulo">Frente</span>
+                <textarea #campoFrente class="campo" name="frente" rows="3" [value]="rascunho().frente" (input)="escrever('frente', $event)"></textarea>
+              </label>
+              <label class="lado verso">
+                <span class="rotulo">Verso</span>
+                <textarea class="campo" name="verso" rows="3" [value]="rascunho().verso" (input)="escrever('verso', $event)"></textarea>
+              </label>
+            </div>
+
+            <div class="acoes">
+              <button class="acao acao--salvar" type="button" [disabled]="!podeSalvar()" (click)="salvar(card)">Salvar</button>
+              <button class="acao" type="button" (click)="editando.set(null)">Cancelar</button>
+            </div>
+          } @else {
+            <div class="lados">
+              <div class="lado frente">
+                <span class="rotulo">Frente</span>
+                <p class="texto">{{ card.frente }}</p>
+              </div>
+              <div class="lado verso">
+                <span class="rotulo">Verso</span>
+                <p class="texto">{{ card.verso }}</p>
+              </div>
+            </div>
+
+            <div class="acoes">
+              <button class="acao acao--aprovar" type="button" (click)="aprovar(card)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="m5 12.5 4.5 4.5L19 7.5" />
+                </svg>
+                Aprovar
+              </button>
+              <button class="acao" type="button" (click)="editar(card)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M21.17 6.81a2.83 2.83 0 0 0-4-4L3.84 16.17a2 2 0 0 0-.5.83l-1.32 4.35a.5.5 0 0 0 .62.62l4.35-1.32a2 2 0 0 0 .83-.5z" />
+                </svg>
+                Editar
+              </button>
+              <button class="acao acao--descartar" type="button" (click)="descartando.set(card)">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 6h18" /><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6" /><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
+                </svg>
+                Descartar
+              </button>
+            </div>
+          }
+        </li>
+      }
+    </ul>
+  }
+}
+
+@if (editandoNoModal(); as card) {
+  <app-editar-card-dialog [card]="card" (salvar)="salvarDoModal(card, $event)" (cancelar)="editandoNoModal.set(null)" />
+}
+
+@if (descartando()) {
+  <app-descartar-card-dialog (confirmar)="descartar()" (cancelar)="descartando.set(null)" />
+}
