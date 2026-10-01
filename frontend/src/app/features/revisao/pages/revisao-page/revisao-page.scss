@@ -1,0 +1,103 @@
+// Estilos próprios da entrada da Revisão; o título vem de disciplinas-page.scss.
+// As cores vêm das variáveis definidas em src/styles.scss.
+
+.opcoes {
+  max-width: 760px;
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.opcao {
+  position: relative;
+  overflow: hidden;
+  min-height: 162px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 24px 28px;
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 16px;
+  color: var(--cor-texto);
+  text-decoration: none;
+  transition:
+    border-color 120ms,
+    box-shadow 120ms;
+}
+
+a.opcao {
+  &:hover {
+    border-color: var(--cor-primaria-clara);
+    box-shadow: 0 4px 14px rgba(38, 33, 92, 0.09);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: 2px;
+  }
+}
+
+.opcao--hoje {
+  background: linear-gradient(135deg, #f5f3ff, var(--cor-card) 70%);
+
+  .enfeite {
+    color: var(--cor-primaria-suave);
+  }
+}
+
+.opcao--novos {
+  background: linear-gradient(135deg, #fff4e8, #fffdfa 70%);
+
+  .enfeite {
+    color: #f3e4d6;
+  }
+}
+
+.opcao--vazia {
+  .numero,
+  .acao {
+    color: var(--cor-texto-secundario);
+  }
+}
+
+.numero {
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--cor-primaria);
+}
+
+.legenda {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--cor-texto-secundario);
+}
+
+.acao {
+  margin-top: 18px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+// Desenho decorativo cortado no canto inferior direito.
+.enfeite {
+  position: absolute;
+  right: -8px;
+  bottom: -14px;
+  width: 104px;
+  height: 104px;
+  pointer-events: none;
+}
+
+@media (max-width: 767.98px) {
+  .opcoes {
+    grid-template-columns: 1fr;
+    margin-top: 22px;
+  }
+
+  .opcao {
+    min-height: 150px;
+    padding: 22px 24px;
+  }
+}

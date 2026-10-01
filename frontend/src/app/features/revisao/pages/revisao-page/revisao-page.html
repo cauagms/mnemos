@@ -1,0 +1,49 @@
+<h1 class="titulo">Revisão</h1>
+
+@if (resumo(); as resumo) {
+  <div class="opcoes">
+    @if (resumo.hoje > 0) {
+      <a class="opcao opcao--hoje" routerLink="/revisao/hoje">
+        <span class="numero">{{ resumo.hoje }}</span>
+        <span class="legenda">esperando hoje</span>
+        <span class="acao">Continuar de onde parei</span>
+        <ng-container *ngTemplateOutlet="relogio" />
+      </a>
+    } @else {
+      <div class="opcao opcao--hoje opcao--vazia">
+        <span class="numero">0</span>
+        <span class="legenda">esperando hoje</span>
+        <span class="acao">Tudo em dia por hoje</span>
+        <ng-container *ngTemplateOutlet="relogio" />
+      </div>
+    }
+
+    @if (resumo.novos > 0) {
+      <a class="opcao opcao--novos" routerLink="/revisao/novos">
+        <span class="numero">{{ resumo.novos }}</span>
+        <span class="legenda">recém-chegados</span>
+        <span class="acao">Descobrir algo novo</span>
+        <ng-container *ngTemplateOutlet="brilho" />
+      </a>
+    } @else {
+      <div class="opcao opcao--novos opcao--vazia">
+        <span class="numero">0</span>
+        <span class="legenda">recém-chegados</span>
+        <span class="acao">Nada novo por enquanto</span>
+        <ng-container *ngTemplateOutlet="brilho" />
+      </div>
+    }
+  </div>
+}
+
+<ng-template #relogio>
+  <svg class="enfeite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
+  </svg>
+</ng-template>
+
+<ng-template #brilho>
+  <svg class="enfeite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M10 3.5 11.9 9.6 18 11.5l-6.1 1.9L10 19.5l-1.9-6.1L2 11.5l6.1-1.9z" /><path d="M19 17v4M17 19h4" />
+  </svg>
+</ng-template>
