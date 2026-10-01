@@ -46,27 +46,11 @@
   }
 }
 
-.icone {
-  flex: none;
-  width: 42px;
-  height: 42px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: var(--cor-primaria-suave);
-  color: var(--cor-primaria);
-
-  svg {
-    width: 19px;
-    height: 19px;
-  }
-}
-
+// Menu ⋮ fixo no canto superior direito, centralizado na primeira linha do nome.
 .topo {
-  align-self: stretch;
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  position: absolute;
+  top: 13px;
+  right: 14px;
 }
 
 // Menu ⋮: mesmo dropdown do card de disciplina (disciplina-card.scss).
@@ -182,7 +166,7 @@
 
 // O dropdown desce sobre a faixa direita do card; o nome reserva essa faixa para nunca ser coberto.
 .nome {
-  margin: 16px 0 0;
+  margin: 0;
   padding-right: calc(var(--largura-menu) + 8px);
   font-size: 16px;
   font-weight: 700;
@@ -195,7 +179,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  margin: 8px 0 16px;
+  margin: 12px 0 16px;
   padding: 4px 9px;
   border-radius: 999px;
   background: var(--cor-primaria-suave);
