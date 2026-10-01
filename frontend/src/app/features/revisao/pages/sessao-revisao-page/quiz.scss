@@ -1,0 +1,146 @@
+// Estilos da questão de quiz na sessão de revisão (separados de sessao-revisao-page.scss só
+// pelo limite de tamanho por arquivo de estilo).
+
+.alternativas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 28px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.alternativa {
+  --cor-veredito: var(--cor-texto);
+  overflow: hidden;
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 13px;
+  background: var(--cor-card);
+}
+
+.alternativa-botao {
+  width: 100%;
+  min-height: 54px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: left;
+  color: var(--cor-texto);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: #faf9ff;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-primaria);
+    outline-offset: -2px;
+    border-radius: 13px;
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.alternativa:has(.alternativa-botao:hover:not(:disabled)) {
+  border-color: var(--cor-primaria-clara);
+}
+
+.letra {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 7px;
+  background: var(--cor-primaria-suave);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--cor-texto-secundario);
+}
+
+// Depois de responder: as alternativas que não foram escolhidas nem são a certa ficam apagadas.
+.alternativa--respondida {
+  background: #fcfcfe;
+
+  .alternativa-botao,
+  .explicacao-texto {
+    color: var(--cor-texto-secundario);
+  }
+}
+
+.alternativa--certa,
+.alternativa--errada {
+  .alternativa-botao,
+  .explicacao-texto {
+    color: var(--cor-texto);
+  }
+}
+
+.alternativa--certa {
+  --cor-veredito: #1d6b42;
+  border-color: #1d6b42;
+  background: #f7fbf8;
+}
+
+.alternativa--errada {
+  --cor-veredito: var(--cor-erro);
+  border-color: var(--cor-erro);
+  background: #fffafb;
+}
+
+.explicacao {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px 16px;
+  border-top: 1px solid var(--cor-borda-card);
+
+  svg {
+    flex: none;
+    width: 16px;
+    height: 16px;
+    margin-top: 4px;
+    color: var(--cor-veredito);
+  }
+}
+
+.veredito {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cor-veredito);
+}
+
+.explicacao-texto {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.retorno {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+
+  .botao {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .alternativa-botao {
+    padding: 10px 14px;
+  }
+
+  .explicacao {
+    padding: 12px 14px 14px;
+  }
+}

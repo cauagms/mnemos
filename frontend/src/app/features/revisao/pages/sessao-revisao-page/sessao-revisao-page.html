@@ -1,0 +1,135 @@
+<a class="voltar" routerLink="/revisao">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M14 6l-6 6 6 6" />
+  </svg>
+  Voltar
+</a>
+
+<h1 class="titulo">Revisão</h1>
+
+@if (itens(); as itens) {
+  @if (atual(); as atual) {
+    <div class="status">
+      <span class="contador">{{ indice() + 1 }} de {{ itens.length }}</span>
+      <nav class="trilha" aria-label="Item de">
+        <span>{{ atual.disciplina }}</span>
+        <span aria-hidden="true">›</span>
+        <span class="trilha-atual">{{ atual.topico }}</span>
+      </nav>
+    </div>
+
+    <div
+      class="progresso"
+      role="progressbar"
+      aria-label="Itens revisados"
+      aria-valuemin="0"
+      [attr.aria-valuemax]="itens.length"
+      [attr.aria-valuenow]="indice()"
+    >
+      <div class="progresso-barra" [style.width.%]="(indice() / itens.length) * 100"></div>
+    </div>
+
+    <!-- O @for de um item só recria a carta a cada item: o próximo flashcard já nasce pela
+         frente, sem animar a volta (o que mostraria a resposta dele no meio do giro). -->
+    @for (item of [atual]; track item.id) {
+      @if (item.tipo === 'flashcard') {
+        <div class="carta" [class.carta--virada]="virada()">
+          <div class="carta-interno" [style.height.px]="alturaCarta()">
+            <section #frente class="face frente" [attr.inert]="virada() ? '' : null">
+              <h2 class="pergunta">{{ item.pergunta }}</h2>
+              <button #inicio class="botao" type="button" (click)="virar()">Mostrar resposta</button>
+            </section>
+
+            <section #verso class="face verso" [attr.inert]="virada() ? null : ''">
+              <h2 class="pergunta">{{ item.pergunta }}</h2>
+              <div #resposta class="resposta" tabindex="-1">
+                <span class="rotulo">Resposta</span>
+                <p class="resposta-texto">{{ item.resposta }}</p>
+              </div>
+              <p class="lembrar" id="lembrar">O quanto foi fácil lembrar?</p>
+              <div class="notas" role="group" aria-labelledby="lembrar">
+                @for (opcao of notas; track opcao.nota) {
+                  <button class="nota" [class]="'nota--' + opcao.nota" type="button" (click)="avaliar(opcao.nota)">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      @switch (opcao.nota) {
+                        @case ('errei') { <path d="M7 7l10 10M17 7 7 17" /> }
+                        @case ('dificil') { <path d="M6 12h12" /> }
+                        @case ('bom') { <path d="m5 12.5 4.5 4.5L19 7.5" /> }
+                        @case ('facil') { <path d="m2 12.5 4.5 4.5L16 7.5" /><path d="m12 16 1 1 9.5-9.5" /> }
+                      }
+                    </svg>
+                    {{ opcao.rotulo }}
+                  </button>
+                }
+              </div>
+            </section>
+          </div>
+        </div>
+      } @else {
+        <section class="carta questao">
+          <h2 class="pergunta">{{ item.pergunta }}</h2>
+          <ul class="alternativas">
+            @for (alternativa of item.alternativas; track $index) {
+              @let respondida = escolhida() !== null;
+              @let certa = respondida && $index === item.correta;
+              @let errada = escolhida() === $index && $index !== item.correta;
+              <li
+                class="alternativa"
+                [class.alternativa--respondida]="respondida"
+                [class.alternativa--certa]="certa"
+                [class.alternativa--errada]="errada"
+              >
+                <button #inicio class="alternativa-botao" type="button" [disabled]="respondida" (click)="escolher($index)">
+                  <span class="letra">{{ letras[$index] }}</span>
+                  {{ alternativa.texto }}
+                </button>
+
+                @if (respondida) {
+                  <div class="explicacao">
+                    @if (certa || errada) {
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        @if (certa) {
+                          <path d="m5 12.5 4.5 4.5L19 7.5" />
+                        } @else {
+                          <path d="M7 7l10 10M17 7 7 17" />
+                        }
+                      </svg>
+                    }
+                    <div>
+                      @if (certa || errada) {
+                        <strong class="veredito">{{ certa ? 'Resposta correta' : 'Resposta incorreta' }}</strong>
+                      }
+                      <p class="explicacao-texto">{{ alternativa.explicacao }}</p>
+                    </div>
+                  </div>
+                }
+              </li>
+            }
+          </ul>
+
+          @if (escolhida() !== null) {
+            <div class="retorno">
+              <button #proxima class="botao" type="button" (click)="avancar()">Próxima</button>
+            </div>
+          }
+        </section>
+      }
+    }
+  } @else {
+    <section class="carta fim" role="status">
+      <div class="fim-icone">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" /><path d="m8.5 12.2 2.4 2.4 4.6-4.8" />
+        </svg>
+      </div>
+      @if (itens.length > 0) {
+        <h2 class="pergunta">Revisão concluída!</h2>
+        <p class="fim-texto">Você revisou {{ itens.length }} {{ itens.length === 1 ? 'item' : 'itens' }}. O Mnemos avisa quando for hora de revisar de novo.</p>
+      } @else {
+        <h2 class="pergunta">Nada para revisar agora</h2>
+        <p class="fim-texto">Quando chegar a hora de revisar algo, ele aparece aqui.</p>
+      }
+      <a class="botao" routerLink="/revisao">Voltar para Revisão</a>
+    </section>
+  }
+}

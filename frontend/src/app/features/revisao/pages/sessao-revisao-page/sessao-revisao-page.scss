@@ -1,0 +1,290 @@
+// Estilos próprios da sessão de revisão; título, botão, "Voltar" e trilha vêm das telas de
+// Disciplinas, Tópicos e Enviar material. As cores vêm das variáveis de src/styles.scss.
+
+.status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  margin-top: 26px;
+}
+
+.trilha {
+  margin-top: 0;
+  font-size: 13px;
+}
+
+.contador {
+  padding: 6px 13px;
+  border-radius: 999px;
+  background: var(--cor-primaria-suave);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.progresso {
+  max-width: 760px;
+  height: 6px;
+  margin-top: 18px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: var(--cor-primaria-suave);
+}
+
+.progresso-barra {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cor-primaria);
+  transition: width 300ms ease-out;
+}
+
+a.botao {
+  text-decoration: none;
+}
+
+// Cada item novo entra com um leve fade (a carta é recriada a cada item; ver o HTML).
+.carta {
+  max-width: 760px;
+  margin-top: 16px;
+  animation: entrar 200ms ease-out;
+}
+
+@keyframes entrar {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+.face,
+.questao,
+.fim {
+  padding: 32px;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 16px;
+}
+
+.pergunta {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--cor-texto);
+  overflow-wrap: anywhere;
+}
+
+// Flashcard: carta que vira (flip 3D).
+// As duas faces ficam na mesma célula do grid, cada uma com a altura do próprio conteúdo. A
+// altura da carta vem do componente, que mede a face visível: a frente fica compacta e a carta
+// cresce até o tamanho do verso aos poucos, junto com o giro (mesma curva e duração), sem pulo.
+// Sem `perspective` de propósito: com ela, o lado que gira para a frente fica maior e a carta
+// passa da própria largura no meio do giro. Sem ela, a carta só estreita e volta.
+.carta-interno {
+  display: grid;
+  transform-style: preserve-3d;
+  transition:
+    transform 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+    height 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carta--virada .carta-interno {
+  transform: rotateY(180deg);
+}
+
+.face {
+  grid-area: 1 / 1;
+  align-self: start;
+  backface-visibility: hidden;
+}
+
+.verso {
+  transform: rotateY(180deg);
+}
+
+// A face escondida não recebe cliques (o conteúdo dela também fica inerte; ver o HTML).
+.carta:not(.carta--virada) .verso,
+.carta--virada .frente {
+  pointer-events: none;
+}
+
+.frente .botao {
+  margin-top: 24px;
+}
+
+.resposta {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--cor-borda-card);
+  outline: none;
+}
+
+.rotulo {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--cor-texto-secundario);
+}
+
+.resposta-texto {
+  margin: 6px 0 0;
+  font-size: 17px;
+  line-height: 1.5;
+  color: var(--cor-texto);
+}
+
+.lembrar {
+  margin: 20px 0 0;
+  font-size: 13px;
+  color: var(--cor-texto-secundario);
+}
+
+.notas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.nota {
+  --cor-nota: var(--cor-primaria);
+  --fundo-nota: var(--cor-primaria-suave);
+  --borda-nota: var(--cor-primaria-clara);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--borda-nota);
+  border-radius: 8px;
+  background: var(--fundo-nota);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cor-nota);
+  cursor: pointer;
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  &:hover {
+    border-color: var(--cor-nota);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--cor-nota);
+    outline-offset: 2px;
+  }
+}
+
+.nota--errei {
+  --cor-nota: var(--cor-erro);
+  --fundo-nota: #fdecef;
+  --borda-nota: #e98b9b;
+}
+
+.nota--dificil {
+  --cor-nota: #8a5300;
+  --fundo-nota: #fff4e5;
+  --borda-nota: #e3a54f;
+}
+
+.nota--bom {
+  --cor-nota: var(--cor-texto);
+}
+
+.nota--facil {
+  --cor-nota: #1d6b42;
+  --fundo-nota: #e8f6ee;
+  --borda-nota: #7dbf98;
+}
+
+// Sem animação de movimento: em vez de virar, a frente some e o verso aparece (fade).
+@media (prefers-reduced-motion: reduce) {
+  .carta {
+    animation-name: aparecer;
+  }
+
+  .carta-interno,
+  .carta--virada .carta-interno,
+  .verso {
+    transition: none;
+    transform: none;
+  }
+
+  .face {
+    backface-visibility: visible;
+    transition:
+      opacity 200ms,
+      visibility 200ms;
+  }
+
+  .carta:not(.carta--virada) .verso,
+  .carta--virada .frente {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
+}
+
+// Fim da sessão
+.fim {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.fim-icone {
+  width: 62px;
+  height: 62px;
+  margin-bottom: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--cor-primaria-suave);
+  color: var(--cor-primaria);
+
+  svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+.fim-texto {
+  max-width: 420px;
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--cor-texto-secundario);
+}
+
+@media (max-width: 767.98px) {
+  .face,
+  .questao,
+  .fim {
+    padding: 24px;
+  }
+
+  .pergunta {
+    font-size: 19px;
+  }
+
+  .notas {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .nota {
+    justify-content: center;
+  }
+}
