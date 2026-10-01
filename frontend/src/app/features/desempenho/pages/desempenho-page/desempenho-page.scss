@@ -1,0 +1,261 @@
+// Estilos próprios do painel de Desempenho; título e subtítulo vêm de disciplinas-page.scss.
+// As cores vêm das variáveis definidas em src/styles.scss.
+
+.painel {
+  max-width: 880px;
+  display: grid;
+  gap: 18px;
+}
+
+.cartao {
+  position: relative;
+  overflow: hidden;
+  padding: 24px;
+  background: var(--cor-card);
+  border: 1px solid var(--cor-borda-card);
+  border-radius: 14px;
+}
+
+.cartao-titulo {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--cor-texto);
+}
+
+.cartao-subtitulo {
+  margin: 6px 0 0;
+  font-size: 12.5px;
+  color: var(--cor-texto-secundario);
+}
+
+// Números gerais
+.numeros {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.numero-card {
+  min-height: 115px;
+  padding-block: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.numero-card--geral {
+  background: linear-gradient(135deg, #f5f3ff, var(--cor-card) 75%);
+}
+
+.numero {
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cor-primaria-hover);
+}
+
+.unidade {
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.legenda {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: var(--cor-texto-secundario);
+}
+
+// Desenho decorativo cortado no canto inferior direito.
+.enfeite {
+  position: absolute;
+  right: -10px;
+  bottom: -12px;
+  width: 90px;
+  height: 90px;
+  color: #e9e6f8;
+  pointer-events: none;
+}
+
+.numero-card--geral .enfeite {
+  right: 0;
+  bottom: 18px;
+  height: 50px;
+}
+
+.meio {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+// Aproveitamento por disciplina
+.disciplinas {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin: 19px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.disciplina {
+  --cor-nivel: #1d6b42;
+
+  &[data-nivel='atencao'] {
+    --cor-nivel: #a15c07;
+  }
+
+  &[data-nivel='baixo'] {
+    --cor-nivel: var(--cor-erro);
+  }
+}
+
+.disciplina-linha {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--cor-texto);
+}
+
+.disciplina-valor {
+  font-weight: 700;
+  color: var(--cor-nivel);
+}
+
+.barra {
+  height: 8px;
+  margin-top: 8px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #efeef8;
+}
+
+.barra-preenchida {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--cor-nivel);
+}
+
+// Evolução
+.evolucao {
+  min-height: 218px;
+}
+
+.evolucao-topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.selo {
+  flex: none;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--cor-primaria-suave);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--cor-primaria-hover);
+}
+
+.pontos {
+  position: relative;
+  margin: 26px 0 0;
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--cor-primaria-hover);
+}
+
+.evolucao-texto {
+  position: relative;
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  color: var(--cor-texto-secundario);
+}
+
+// Linha da evolução semanal, decorativa, ocupando a faixa de baixo do card.
+.grafico {
+  position: absolute;
+  left: 0;
+  bottom: 14px;
+  width: 100%;
+  height: 84px;
+
+  polyline {
+    stroke: #dcd8f5;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    vector-effect: non-scaling-stroke;
+  }
+}
+
+// Onde focar
+.focos {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.foco {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid #f6dfe4;
+  border-radius: 10px;
+  background: #fffafb;
+}
+
+.foco-topico,
+.foco-disciplina {
+  display: block;
+}
+
+.foco-topico {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--cor-texto);
+}
+
+.foco-disciplina {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--cor-texto-secundario);
+}
+
+.foco-valor {
+  flex: none;
+  font-size: 17px;
+  font-weight: 700;
+  color: #a10f26;
+}
+
+@media (max-width: 1023.98px) {
+  .meio {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .numeros {
+    grid-template-columns: 1fr;
+  }
+
+  .cartao {
+    padding: 20px;
+  }
+}

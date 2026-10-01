@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { CadastroPage } from './features/auth/pages/cadastro-page/cadastro-page';
 import { CardsPendentesPage } from './features/cards-pendentes/pages/cards-pendentes-page/cards-pendentes-page';
+import { DesempenhoPage } from './features/desempenho/pages/desempenho-page/desempenho-page';
 import { LoginPage } from './features/auth/pages/login-page/login-page';
 import { DisciplinasPage } from './features/disciplinas/pages/disciplinas-page/disciplinas-page';
 import { TopicosPage } from './features/disciplinas/pages/topicos-page/topicos-page';
@@ -27,6 +28,7 @@ export const routes: Routes = [
       { path: 'cards-pendentes', component: CardsPendentesPage, title: 'Cards Pendentes | Mnemos' },
       { path: 'revisao', component: RevisaoPage, title: 'Revisão | Mnemos' },
       { path: 'revisao/:modo', component: SessaoRevisaoPage, title: 'Revisão | Mnemos' },
+      { path: 'desempenho', component: DesempenhoPage, title: 'Desempenho | Mnemos' },
     ],
   },
 ];
