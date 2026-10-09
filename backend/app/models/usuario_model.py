@@ -9,7 +9,7 @@ Estrutura:
         └─ fsrs_progresso (user_id → fsrs_progresso.user_id)
 """
 
-from sqlalchemy import Column, Integer, String, DateTime, Unique
+from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.db import Base
@@ -36,7 +36,7 @@ class UsuarioModel(Base):
     disciplinas = relationship(
         "DisciplinaModel",
         back_populates="usuario",
-        cascade="all, delete-orphan",  # Se usuário deletado → suas disciplinas deletadas
+        cascade="all, delete-orphan",
     )
     
     arquivos = relationship(
