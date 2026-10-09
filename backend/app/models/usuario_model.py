@@ -44,18 +44,6 @@ class UsuarioModel(Base):
         back_populates="usuario",
         cascade="all, delete-orphan",
     )
-    
-    notificacoes = relationship(
-        "NotificacaoAtivaModel",
-        back_populates="usuario",
-        cascade="all, delete-orphan",
-    )
-    
-    fsrs_progresso = relationship(
-        "FSRSProgressoModel",
-        back_populates="usuario",
-        cascade="all, delete-orphan",
-    )
 
     def __repr__(self):
         return f"<UsuarioModel(id={self.id}, email='{self.email}', nome='{self.nome}')>"

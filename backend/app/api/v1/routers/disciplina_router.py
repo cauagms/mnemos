@@ -5,7 +5,7 @@ from app.core.db import get_db
 from app.models.disciplina_model import DisciplinaModel, TopicoModel
 from app.schemas.disciplina_schema import DisciplinaCreate, TopicoCreate
 
-router = APIRouter(prefix="/api/disciplinas", tags=["Disciplinas"])
+router = APIRouter(prefix="/disciplinas", tags=["Disciplinas"])
 
 @router.post("", status_code=status.HTTP_201_CREATED)
 def criar_disciplina(dados: DisciplinaCreate, db: Session = Depends(get_db)):
