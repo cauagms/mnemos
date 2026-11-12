@@ -35,11 +35,12 @@ export class DisciplinasPage {
   protected salvar(nome: string): void {
     const dialogo = this.dialogo();
     if (!dialogo || dialogo.tipo === 'excluir' || this.salvando()) return;
-
+    const usuarioId = 1
+    const descricao = "AAAA"
     const operacao =
       dialogo.tipo === 'editar'
         ? this.service.renomear(dialogo.disciplina.id, nome)
-        : this.service.criar(nome);
+        : this.service.criar(nome, usuarioId, descricao);
 
     this.salvando.set(true);
     operacao.pipe(finalize(() => this.salvando.set(false))).subscribe((salva) => {

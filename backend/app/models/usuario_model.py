@@ -12,7 +12,7 @@ Estrutura:
 from sqlalchemy import Column, Integer, String, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.core.db import Base
+from app.db.database import Base
 
 
 class UsuarioModel(Base):
@@ -30,6 +30,7 @@ class UsuarioModel(Base):
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
     email = Column(String(254), nullable=False, unique=True, index=True)
     nome = Column(String(150), nullable=False)
+    senha = Column(String(255), nullable=False)  # Armazenar hash da senha
     criado_em = Column(DateTime, server_default=func.now())
 
     # Relacionamentos (lazy loading, carrega sob demanda)

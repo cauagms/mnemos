@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.core.db import Base
+from app.db.database import Base
 
 class DisciplinaModel(Base):
     """
@@ -36,6 +36,7 @@ class TopicoModel(Base):
     disciplina_id = Column(Integer, ForeignKey("disciplinas.id"), nullable=False, index=True)
     nome = Column(String(100), nullable=False)
     criado_em = Column(DateTime, server_default=func.now())
+    formato = Column(String(45), nullable=False)
 
     # Relacionamento para Disciplina (many-to-one)
     disciplina = relationship("DisciplinaModel", back_populates="topicos")
@@ -46,3 +47,7 @@ class TopicoModel(Base):
         back_populates="topico",
         cascade="all, delete-orphan",
     )
+    itens_estudo = relationship(
+            "ItemEstudoModel",
+            back_populates="topico",
+        )

@@ -39,3 +39,7 @@ npm-debug.log*
 CLAUDE.md
 CLAUDE.local.md
 .claude/
+
+# ==== Uploads locais (mantém apenas a pasta vazia no repositório) ====
+backend/app/uploads/*
+!backend/app/uploads/.gitkeep

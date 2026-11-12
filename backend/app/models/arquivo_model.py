@@ -10,7 +10,7 @@ Fluxo:
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime, Text, Enum
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-from app.core.db import Base
+from app.db.database import Base
 import enum
 
 

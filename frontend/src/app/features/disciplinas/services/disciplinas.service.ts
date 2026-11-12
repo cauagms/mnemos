@@ -1,47 +1,90 @@
-import { Injectable } from '@angular/core';
-import { Observable, defer, of } from 'rxjs';
 
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, map } from 'rxjs';
+
+// Estrutura de uma disciplina utilizada pelo Angular.
 export interface Disciplina {
   id: string;
   nome: string;
 }
 
-/**
- * SIMULAÇÃO: nenhuma chamada HTTP é feita; as disciplinas vivem só na memória.
- * TODO: substituir pelas chamadas à API de disciplinas quando o backend existir.
- */
-@Injectable({ providedIn: 'root' })
+@Injectable({
+  providedIn: 'root'
+})
 export class DisciplinasService {
-  private disciplinas: Disciplina[] = [];
-  private proximoId = 1;
 
+  // Endereço da API de disciplinas do backend FastAPI.
+  private readonly apiUrl = 'http://localhost:8000/api/v1/disciplinas';
+
+  // O HttpClient permite que o Angular faça requisições HTTP.
+  constructor(private http: HttpClient) {}
+
+  // GET: busca as disciplinas cadastradas no backend.
   listar(): Observable<Disciplina[]> {
-    return this.simular(() => [...this.disciplinas]);
+    return this.http.get<any>(this.apiUrl).pipe(
+      map((resposta) => {
+        // Aceita uma lista direta ou uma lista dentro de "disciplinas".
+        const disciplinas = Array.isArray(resposta)
+          ? resposta
+          : resposta.disciplinas;
+
+        // Converte os dados para o formato esperado pelo Angular.
+        return disciplinas.map((disciplina: any) => ({
+          id: String(disciplina.id),
+          nome: disciplina.nome
+        }));
+      })
+    );
   }
 
-  criar(nome: string): Observable<Disciplina> {
-    return this.simular(() => {
-      const disciplina = { id: String(this.proximoId++), nome: nome.trim() };
-      this.disciplinas = [...this.disciplinas, disciplina];
-      return disciplina;
-    });
+  // POST: criar uma disciplina.
+  // O backend atual exige usuario_id, nome e descricao.
+  criar(
+    nome: string,
+    usuarioId: number,
+    descricao: string = ''
+  ): Observable<Disciplina> {
+    return this.http
+      .post<any>(this.apiUrl, {
+        usuario_id: usuarioId,
+        nome: nome.trim(),
+        descricao
+      })
+      .pipe(
+        map((resposta) => {
+          const disciplina = resposta.disciplina ?? resposta;
+
+          return {
+            id: String(disciplina.id),
+            nome: disciplina.nome
+          };
+        })
+      );
   }
 
+  // PUT: renomear uma disciplina.
+  // Depende da existência de uma rota PUT correspondente no backend.
   renomear(id: string, nome: string): Observable<Disciplina> {
-    return this.simular(() => {
-      const disciplina = { id, nome: nome.trim() };
-      this.disciplinas = this.disciplinas.map((d) => (d.id === id ? disciplina : d));
-      return disciplina;
-    });
+    return this.http
+      .put<any>(`${this.apiUrl}/${id}`, {
+        nome: nome.trim()
+      })
+      .pipe(
+        map((resposta) => {
+          const disciplina = resposta.disciplina ?? resposta;
+
+          return {
+            id: String(disciplina.id),
+            nome: disciplina.nome
+          };
+        })
+      );
   }
 
+  // DELETE: excluir uma disciplina.
+  // Depende da existência de uma rota DELETE correspondente no backend.
   excluir(id: string): Observable<void> {
-    return this.simular(() => {
-      this.disciplinas = this.disciplinas.filter((d) => d.id !== id);
-    });
-  }
-
-  private simular<T>(operacao: () => T): Observable<T> {
-    return defer(() => of(operacao()));
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

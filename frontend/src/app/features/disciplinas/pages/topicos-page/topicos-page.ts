@@ -50,25 +50,47 @@ export class TopicosPage {
       .subscribe((lista) => this.topicos.set(lista));
   }
 
-  protected salvar({ nome, formato }: NovoTopico): void {
-    const dialogo = this.dialogo();
-    if (!dialogo || dialogo.tipo === 'excluir' || this.salvando()) return;
+ protected salvar({ nome, formato }: NovoTopico): void {
+  console.log('Método salvar chamado:', { nome, formato });
 
-    const operacao =
-      dialogo.tipo === 'editar'
-        ? this.topicosService.editar(this.id, dialogo.topico.id, nome, formato)
-        : this.topicosService.criar(this.id, nome, formato);
+  const dialogo = this.dialogo();
 
-    this.salvando.set(true);
-    operacao.pipe(finalize(() => this.salvando.set(false))).subscribe((salvo) => {
-      this.topicos.update((lista) =>
-        dialogo.tipo === 'editar'
-          ? (lista ?? []).map((t) => (t.id === salvo.id ? salvo : t))
-          : [...(lista ?? []), salvo],
-      );
-      this.dialogo.set(null);
+  if (!dialogo || dialogo.tipo === 'excluir' || this.salvando()) {
+    console.log('Operação interrompida:', {
+      dialogo,
+      salvando: this.salvando(),
     });
+    return;
   }
+
+  const operacao =
+    dialogo.tipo === 'editar'
+      ? this.topicosService.editar(this.id, dialogo.topico.id, nome, formato)
+      : this.topicosService.criar(this.id, nome, formato);
+
+  console.log('Operação HTTP preparada:', dialogo.tipo);
+
+  this.salvando.set(true);
+
+  operacao
+    .pipe(finalize(() => this.salvando.set(false)))
+    .subscribe({
+      next: (resposta) => {
+        console.log('Resposta recebida do backend:', resposta);
+
+        this.topicos.update((lista) =>
+          dialogo.tipo === 'editar'
+            ? (lista ?? []).map((t) => (t.id === resposta.id ? resposta : t))
+            : [...(lista ?? []), resposta],
+        );
+
+        this.dialogo.set(null);
+      },
+      error: (erro) => {
+        console.error('Erro na requisição HTTP:', erro);
+      },
+    });
+}
 
   protected excluir(): void {
     const dialogo = this.dialogo();
