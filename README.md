@@ -48,18 +48,14 @@ O projeto une, em um único fluxo, o que hoje está espalhado entre ferramentas 
 
 ## 🚀 Funcionalidades
 
-- ✅ Cadastro de usuário com validação de nome, e-mail, senha com no mínimo 8 caracteres e confirmação de senha
-- ✅ Tela de login com exibição de senha e estado de carregamento
-- ✅ Layout responsivo: sidebar no desktop e barra de navegação inferior no mobile
-- ✅ Gerenciamento de disciplinas: criar, renomear e excluir
-- ✅ Gerenciamento de tópicos por disciplina, com formato `flashcards` ou `quiz`
-- ✅ Envio de material por arrastar-e-soltar ou seleção de arquivo PDF, DOCX ou PPTX, com tela de processamento
-- ✅ Curadoria de flashcards: editar frente e verso direto na lista ou em modal, aprovar e descartar
-- ✅ Sessão de revisão nos modos `hoje` e `novos`, com flashcards que viram para revelar a resposta e avaliação pelas notas Errei, Difícil, Bom e Fácil
-- ✅ Quiz com alternativas, feedback e explicação de cada alternativa
-- ✅ Painel de desempenho: aproveitamento geral, revisões realizadas, sequência de dias, aproveitamento por disciplina, evolução semanal e tópicos para focar
-- ✅ Navegação por rotas, estados vazios e diálogos de confirmação em todas as telas
-- ✅ Testes unitários das telas e serviços com Vitest
+- ✅ Cadastro e login de usuários
+- ✅ Validação de nome, e-mail e senha
+- ✅ Layout responsivo para desktop e mobile
+- ✅ Gerenciamento de disciplinas e tópicos
+- ✅ Envio de material em PDF, DOCX e PPTX
+- ✅ Curadoria de flashcards com edição, aprovação e descarte
+- ✅ Revisão espaçada com flashcards e quizzes
+- ✅ Painel de desempenho por disciplina
 
 ## 🧩 Estrutura do Projeto
 
